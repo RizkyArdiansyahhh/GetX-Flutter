@@ -3,10 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:learn_state_manager/controllers/user_controller.dart';
-import 'package:learn_state_manager/models/user.dart';
 
 class UserPage extends StatelessWidget {
-  UserPage({super.key});
+  const UserPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +14,7 @@ class UserPage extends StatelessWidget {
       appBar: AppBar(title: Text("GetX")),
       body: Center(
         child: GetX<UserController>(
+          init: UserController(),
           builder: (controler) {
             return Text(
               "Nama Saya ${controler.userRizky.value.name}",
