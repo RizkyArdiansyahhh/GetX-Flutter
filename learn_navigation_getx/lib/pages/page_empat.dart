@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:learn_navigation_getx/pages/page_tiga.dart';
 
 class PageEmpat extends StatelessWidget {
   const PageEmpat({super.key});
@@ -27,7 +30,8 @@ class PageEmpat extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    // navigator!.pop();
+                    Get.back();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.pink[400],

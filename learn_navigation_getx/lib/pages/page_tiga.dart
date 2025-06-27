@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:learn_navigation_getx/pages/page_empat.dart';
+import 'package:learn_navigation_getx/routes/app_routes.dart';
 
 class PageTiga extends StatelessWidget {
   const PageTiga({super.key});
@@ -28,7 +31,8 @@ class PageTiga extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    // navigator!.pop();
+                    Get.back();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.pink[400],
@@ -49,9 +53,10 @@ class PageTiga extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => PageEmpat()),
-                    );
+                    // navigator!.push(
+                    //   MaterialPageRoute(builder: (context) => PageEmpat()),
+                    // );
+                    Get.toNamed(AppRoutes.page4);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.pink[400],

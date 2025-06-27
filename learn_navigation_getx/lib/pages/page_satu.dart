@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:learn_navigation_getx/pages/page_dua.dart';
+import 'package:learn_navigation_getx/routes/app_routes.dart';
 
 class PageSatu extends StatelessWidget {
   const PageSatu({super.key});
@@ -28,9 +30,10 @@ class PageSatu extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(
-                      context,
-                    ).push(MaterialPageRoute(builder: (context) => PageDua()));
+                    // navigator!.push(
+                    //   MaterialPageRoute(builder: (context) => PageDua()),
+                    // );
+                    Get.toNamed(AppRoutes.page2);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.pink[400],
