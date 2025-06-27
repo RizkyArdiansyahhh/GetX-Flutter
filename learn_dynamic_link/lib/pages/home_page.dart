@@ -10,9 +10,21 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Home")),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.snackbar(
+            "Succes",
+            "User Successly add",
+            icon: Icon(Icons.done),
+            showProgressIndicator: true,
+          );
+        },
+        backgroundColor: Colors.cyan,
+      ),
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+
           children: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(
