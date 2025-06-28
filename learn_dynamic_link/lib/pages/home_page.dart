@@ -16,7 +16,6 @@ class HomePage extends StatelessWidget {
             "Succes",
             "User Successly add",
             icon: Icon(Icons.done),
-            showProgressIndicator: true,
           );
         },
         backgroundColor: Colors.cyan,
