@@ -23,6 +23,14 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.changeTheme(
+            (Get.isDarkMode) ? ThemeData.light() : ThemeData.dark(),
+          );
+        },
+        backgroundColor: Colors.pink,
+      ),
     );
   }
 }
