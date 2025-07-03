@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/state_manager.dart';
+import 'package:getx_connect/controllers/addC.dart';
 import 'package:getx_connect/controllers/usersC.dart';
 
 class AddPage extends StatelessWidget {
-  final TextEditingController textEditingControllerName =
-      TextEditingController();
-  final TextEditingController textEditingControllerEmail =
-      TextEditingController();
-  final TextEditingController textEditingControllerPhone =
-      TextEditingController();
   final Usersc userC = Get.find<Usersc>();
+  final Addc addC = Get.find<Addc>();
   AddPage({super.key});
 
   @override
@@ -22,7 +18,7 @@ class AddPage extends StatelessWidget {
         child: ListView(
           children: [
             TextField(
-              controller: textEditingControllerName,
+              controller: addC.nameC,
               decoration: InputDecoration(
                 hintText: "Name",
                 border: OutlineInputBorder(
@@ -32,7 +28,7 @@ class AddPage extends StatelessWidget {
             ),
             SizedBox(height: 13),
             TextField(
-              controller: textEditingControllerEmail,
+              controller: addC.emailC,
               decoration: InputDecoration(
                 hintText: "Email",
                 border: OutlineInputBorder(
@@ -42,7 +38,7 @@ class AddPage extends StatelessWidget {
             ),
             SizedBox(height: 13),
             TextField(
-              controller: textEditingControllerPhone,
+              controller: addC.phoneC,
               decoration: InputDecoration(
                 hintText: "Phone",
                 border: OutlineInputBorder(
@@ -53,11 +49,7 @@ class AddPage extends StatelessWidget {
             SizedBox(height: 13),
             ElevatedButton(
               onPressed: () {
-                userC.add(
-                  textEditingControllerName.text,
-                  textEditingControllerEmail.text,
-                  textEditingControllerPhone.text,
-                );
+                userC.add(addC.nameC.text, addC.emailC.text, addC.phoneC.text);
               },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.pink),
               child: Text(
