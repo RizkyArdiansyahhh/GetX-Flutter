@@ -15,4 +15,17 @@ class UsersProvider extends GetConnect {
   Future<Response> deleteUser(String id) {
     return delete("$url/users/$id.json");
   }
+
+  Future<Response> editUser(
+    String id,
+    String name,
+    String email,
+    String phone,
+  ) {
+    return patch("$url/users/$id.json", {
+      "name": name,
+      "email": email,
+      "phone": phone,
+    });
+  }
 }

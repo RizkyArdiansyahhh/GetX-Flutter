@@ -65,10 +65,12 @@ class Usersc extends GetxController {
         email.trim().isNotEmpty &&
         phone.trim().isNotEmpty) {
       if (email.trim().contains("@")) {
-        final index = users.indexWhere((user) => user.id == id);
+        UsersProvider().editUser(id, name, email, phone).then((value) {
+          final index = users.indexWhere((user) => user.id == id);
 
-        users[index] = User(id: id, name: name, email: email, phone: phone);
-        users.refresh();
+          users[index] = User(id: id, name: name, email: email, phone: phone);
+          users.refresh();
+        });
         Get.back();
         showSnackbar("Success", "Profile Berhasil Diubah");
       }
