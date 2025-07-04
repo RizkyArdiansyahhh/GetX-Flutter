@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myget/providers/users_provider.dart';
 import '../models/user.dart';
 
 class UsersC extends GetxController {
@@ -16,14 +17,10 @@ class UsersC extends GetxController {
   void add(String name, String email, String phone) {
     if (name != '' && email != '' && phone != '') {
       if (email.contains("@")) {
-        users.add(
-          User(
-            id: DateTime.now().toString(),
-            name: name,
-            email: email,
-            phone: phone,
-          ),
-        );
+        UsersProvider().addUser(name, email, phone).then((value) {
+          users.add(User.fromJson(value.body));
+        });
+
         Get.back();
       } else {
         snackBarError("Masukan email valid");

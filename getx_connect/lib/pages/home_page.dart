@@ -50,11 +50,16 @@ class HomePage extends StatelessWidget {
                       title: Text(userC.users[index].name),
                       subtitle: Text(userC.users[index].email),
                       trailing: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          userC.deleted(userC.users[index].id);
+                        },
                         icon: Icon(Icons.delete),
                       ),
                       onTap: () {
-                        Get.toNamed(AppRoutes.profile);
+                        Get.toNamed(
+                          AppRoutes.profile,
+                          arguments: userC.users[index].id,
+                        );
                       },
                     );
                   },

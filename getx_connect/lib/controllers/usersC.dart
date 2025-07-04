@@ -1,36 +1,77 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:getx_connect/models/user.dart';
+import 'package:getx_connect/providers/users_provider.dart';
 
 class Usersc extends GetxController {
   var users = List<User>.empty().obs;
 
-  void showSnackbar(String message) {
-    Get.snackbar("Error", message, duration: Duration(seconds: 2));
+  void showSnackbar(String title, message) {
+    Get.snackbar(title, message, duration: Duration(seconds: 2));
+  }
+
+  User searchUserById(id) {
+    return users.firstWhere((user) => user.id == id);
   }
 
   void add(String name, String email, String phone) {
-    var inputName = name.trim();
-    var inputEmail = email.trim();
-    var inputPhone = phone.trim();
+    final inputName = name.trim();
+    final inputEmail = email.trim();
+    final inputPhone = phone.trim();
     if (inputName.isNotEmpty &&
         inputEmail.isNotEmpty &&
         inputPhone.isNotEmpty) {
       if (inputEmail.contains("@")) {
-        users.add(
-          User(
-            id: DateTime.now().toString(),
-            name: inputName,
-            email: inputEmail,
-            phone: inputPhone,
-          ),
-        );
-        print(users);
+        UsersProvider().addUser(name, email, phone).then((value) {
+          users.add(
+            User(
+              id: value.body["name"],
+              name: name,
+              email: email,
+              phone: phone,
+            ),
+          );
+        });
+
         Get.back();
       } else {
-        showSnackbar("Email Tidak Valid");
+        showSnackbar("Error", "Email Tidak Valid");
       }
     } else {
-      showSnackbar("Kolom Inputan Tidak Boleh Kosong");
+      showSnackbar("Error", "Kolom Inputan Tidak Boleh Kosong");
+    }
+  }
+
+  void deleted(id) {
+    Get.defaultDialog(
+      title: "DELETE",
+      middleText: "Apakah anda yakin menghapus ini?",
+      textConfirm: "Yes",
+      textCancel: "Cancel",
+      onConfirm: () {
+        UsersProvider().deleteUser(id).then((value) {
+          users.removeWhere((user) => user.id == id);
+        });
+        // users.removeWhere((user) => user.id == id);
+        Get.back();
+        showSnackbar("Berhasil", "User Berhasil Dihapus");
+      },
+    );
+  }
+
+  void edit(String id, String name, String email, String phone) {
+    if (name.trim().isNotEmpty &&
+        email.trim().isNotEmpty &&
+        phone.trim().isNotEmpty) {
+      if (email.trim().contains("@")) {
+        final index = users.indexWhere((user) => user.id == id);
+
+        users[index] = User(id: id, name: name, email: email, phone: phone);
+        users.refresh();
+        Get.back();
+        showSnackbar("Success", "Profile Berhasil Diubah");
+      }
     }
   }
 }
