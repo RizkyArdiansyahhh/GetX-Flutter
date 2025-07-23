@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:implement_get_cli/app/data/models/product_model.dart';
+import 'package:implement_get_cli/app/data/providers/product_provider.dart';
 import 'package:implement_get_cli/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
@@ -13,13 +14,19 @@ class HomeController extends GetxController {
     return products.firstWhere((product) => product.id == id);
   }
 
-  void add(String name) {
+  Future<void> add(String name) async {
     if (name.trim().isEmpty) {
       showSnackbar("Failed", "Product name can't be empty");
     } else {
       final date = DateTime.now().toString();
-      products.add(Product(id: date, name: name, createAt: date));
-      showSnackbar("Success", "Products success to add");
+      final Product product = Product(id: date, name: name, createAt: date);
+      try {
+        await ProductProvider().postProduct(product);
+        products.add(product);
+        showSnackbar("Success", "Product successfully added");
+      } catch (e) {
+        showSnackbar("Error", "Failed to add product: $e");
+      }
     }
   }
 
