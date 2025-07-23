@@ -16,6 +16,7 @@ class AddController extends GetxController {
 
   @override
   void onClose() {
+    nameController.dispose();
     super.onClose();
   }
 }

@@ -28,7 +28,10 @@ class HomeView extends GetView<HomeController> {
                   itemCount: controller.products.length,
                   itemBuilder: (context, index) {
                     final product = controller.products[index];
-                    return CardProductView(product: product);
+                    return CardProductView(
+                      product: product,
+                      homeController: controller,
+                    );
                   },
                 )
               : Center(child: Text("Data Not Found")),

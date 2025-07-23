@@ -6,7 +6,7 @@ class HomeController extends GetxController {
   var products = List<Product>.empty().obs;
 
   void showSnackbar(String title, String message) {
-    Get.snackbar(title, message);
+    Get.snackbar(title, message, duration: Duration(milliseconds: 1000));
   }
 
   Product searchProductById(String id) {
@@ -20,9 +20,6 @@ class HomeController extends GetxController {
       final date = DateTime.now().toString();
       products.add(Product(id: date, name: name, createAt: date));
       showSnackbar("Success", "Products success to add");
-      Future.delayed(Duration(milliseconds: 300), () {
-        Get.offAllNamed(Routes.HOME);
-      });
     }
   }
 
@@ -41,12 +38,17 @@ class HomeController extends GetxController {
   }
 
   void edit(String id, String name) {
+    final product = searchProductById(id);
+
     if (name.trim().isEmpty) {
       showSnackbar("Failed", "Product name can't be empty");
       return;
+    } else if (name == product.name) {
+      showSnackbar("Info", "No changes detected");
+      return;
     }
-    final product = searchProductById(id);
     product.name = name;
+    showSnackbar("Success", "Product updated successfully");
     products.refresh();
   }
 

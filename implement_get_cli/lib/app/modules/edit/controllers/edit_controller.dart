@@ -1,12 +1,18 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:implement_get_cli/app/data/models/product_model.dart';
+import 'package:implement_get_cli/app/modules/home/controllers/home_controller.dart';
 
 class EditController extends GetxController {
-  //TODO: Implement EditController
-
-  final count = 0.obs;
+  late TextEditingController nameEditController;
+  final HomeController homeController = Get.find<HomeController>();
   @override
   void onInit() {
     super.onInit();
+    nameEditController = TextEditingController();
+    final id = Get.arguments;
+    final Product product = homeController.searchProductById(id);
+    nameEditController.text = product.name!;
   }
 
   @override
@@ -16,8 +22,7 @@ class EditController extends GetxController {
 
   @override
   void onClose() {
+    nameEditController.dispose();
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

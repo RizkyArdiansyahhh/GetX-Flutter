@@ -21,10 +21,6 @@ class AppPages {
       binding: HomeBinding(),
     ),
     GetPage(name: _Paths.ADD, page: () => AddView(), binding: AddBinding()),
-    GetPage(
-      name: _Paths.EDIT,
-      page: () => const EditView(),
-      binding: EditBinding(),
-    ),
+    GetPage(name: _Paths.EDIT, page: () => EditView(), binding: EditBinding()),
   ];
 }
