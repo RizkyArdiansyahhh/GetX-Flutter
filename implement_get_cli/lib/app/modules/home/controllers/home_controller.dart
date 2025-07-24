@@ -19,10 +19,13 @@ class HomeController extends GetxController {
       showSnackbar("Failed", "Product name can't be empty");
     } else {
       final date = DateTime.now().toString();
-      final Product product = Product(id: date, name: name, createAt: date);
+      final Product product = Product(id: "", name: name, createAt: date);
       try {
-        await ProductProvider().postProduct(product);
-        products.add(product);
+        await ProductProvider().postProduct(product).then((value) {
+          if (value != null) {
+            products.add(Product(id: value, name: name, createAt: date));
+          }
+        });
         showSnackbar("Success", "Product successfully added");
       } catch (e) {
         showSnackbar("Error", "Failed to add product: $e");
@@ -36,10 +39,15 @@ class HomeController extends GetxController {
       middleText: "Are you sure you want to delete this product?",
       textConfirm: "Yes",
       textCancel: "Cancel",
-      onConfirm: () {
-        products.removeWhere((product) => product.id == id);
-        Get.back();
-        showSnackbar("Success", "Product successfully deleted ");
+      onConfirm: () async {
+        try {
+          await ProductProvider().deleteProduct(id);
+          products.removeWhere((product) => product.id == id);
+          Get.back();
+          showSnackbar("Success", "Product successfully deleted ");
+        } catch (e) {
+          print(e);
+        }
       },
     );
   }
@@ -54,21 +62,24 @@ class HomeController extends GetxController {
       showSnackbar("Info", "No changes detected");
       return;
     }
+    ProductProvider().editProduct(id, name);
     product.name = name;
     showSnackbar("Success", "Product updated successfully");
     products.refresh();
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    products.add(
-      Product(
-        id: DateTime.now().toString(),
-        name: "Product 1",
-        createAt: DateTime.now().toString(),
-      ),
-    );
+    try {
+      final Map<String, dynamic> data = await ProductProvider().getProduct();
+      final List<Product> productJson = data.entries
+          .map((product) => Product.fromJson(product.key, product.value))
+          .toList();
+      products.addAll(productJson);
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
